@@ -3,14 +3,22 @@
 # Then read the result to find which puzzles have been started but not completed
 
 import json
+import requests
 
 # nyt api query + add on all IDs (max 1000 per request)
-query = "https://www.nytimes.com/svc/crosswords/v3/86120152/progress.json?puzzle_ids="
-for id in range(11000, 12000):
-    query += str(id) + ','
+accountID = input("Enter your NYT Games Account ID:")
+query = "https://www.nytimes.com/svc/crosswords/v3/{}/progress.json?puzzle_ids=20788".format(accountID)
 
-print(query)
-# quit() in case you only want to get the query and not read the file
+for id in range(11000, 11050):
+    query += ',' + str(id)
+
+r = requests.get(url = query)
+
+data = r.json()
+
+print (data)
+
+
 
 # you must manually copy/paste result from api to a file and then read said file making sure it is just a list of objects 
 with open('file.json', 'r') as f:
